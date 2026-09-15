@@ -3,189 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>Trade-in Banner Prototype</title>
-    <style>
-      :root {
-        --tib-ink: #2b2b2f;
-        --tib-green: #17a952;
-        --tib-navy: #1e2a78;
-        --tib-blue: #3d3ddb;
-        --tib-bg: #f4f2ec;
-        --tib-star: #ffd23f;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-        overflow-x: clip;
-      }
-
-      /* ============================================
-     BEM block: trade-in-banner
-     Full-bleed technique: same left:50%/translateX(-50%)
-     pattern used across the other CMS blocks so this
-     survives inside Magento's constrained content column.
-     ============================================ */
-      .trade-in-banner {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100vw;
-        background: var(--tib-bg);
-        padding: 32px 20px 40px;
-        overflow: hidden;
-      }
-
-      /* Mobile base: stacked, centered */
-      .trade-in-banner__inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        text-align: center;
-      }
-
-      /* ---------- copy side ---------- */
-      .trade-in-banner__copy {
-        order: 2;
-        min-width: 0;
-      }
-
-      .trade-in-banner__heading {
-        margin: 0;
-        font-weight: 800;
-        line-height: 0.95;
-        letter-spacing: -0.5px;
-      }
-      .trade-in-banner__heading-line {
-        display: block;
-        font-size: 34px;
-        color: var(--tib-ink);
-      }
-      .trade-in-banner__heading-line--accent {
-        color: var(--tib-green);
-        font-size: 40px;
-      }
-
-      .trade-in-banner__subtext {
-        margin: 16px 0 20px;
-        font-size: 15px;
-        color: var(--tib-ink);
-      }
-      .trade-in-banner__brand {
-        color: var(--tib-blue);
-        font-weight: 700;
-      }
-
-      .trade-in-banner__ctas {
-        display: flex;
-        justify-content: center;
-        gap: 14px;
-        flex-wrap: wrap;
-      }
-
-      .tib-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 20px;
-        border-radius: 999px;
-        font-size: 14px;
-        font-weight: 700;
-        text-decoration: none;
-        cursor: pointer;
-        border: 2px solid var(--tib-navy);
-        transition: opacity 0.15s ease;
-      }
-      .tib-btn:hover {
-        opacity: 0.85;
-      }
-      .tib-btn--primary {
-        background: var(--tib-navy);
-        color: #fff;
-      }
-      .tib-btn--secondary {
-        background: transparent;
-        color: var(--tib-navy);
-      }
-
-      /* ---------- image side ----------
-     The whole visual (shape + photo + badges + stars) ships as
-     one flattened image asset from the design team, so this side
-     is just a single responsive <img> — no layered markup needed. */
-      .trade-in-banner__media {
-        order: 1;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .trade-in-banner__media-img {
-        display: block;
-        width: 100%;
-        max-width: 480px;
-        height: auto;
-      }
-
-      /* ============================================
-     Desktop and up: side-by-side layout
-     ============================================ */
-      @media (min-width: 768px) {
-        .trade-in-banner {
-          padding: 56px 24px;
-        }
-        .trade-in-banner__inner {
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          gap: 40px;
-          text-align: left;
-        }
-        .trade-in-banner__copy {
-          order: 0;
-          flex: 1 1 480px;
-        }
-        .trade-in-banner__media {
-          order: 0;
-          flex: 1 1 420px;
-          width: auto;
-        }
-        .trade-in-banner__heading-line {
-          font-size: 56px;
-        }
-        .trade-in-banner__heading-line--accent {
-          font-size: 64px;
-        }
-        .trade-in-banner__subtext {
-          font-size: 18px;
-          margin-bottom: 28px;
-        }
-        .trade-in-banner__ctas {
-          justify-content: flex-start;
-        }
-        .tib-btn {
-          padding: 14px 26px;
-          font-size: 15px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <section class="trade-in-banner">
+    <section id="trade-in-banner">
       <div class="trade-in-banner__inner">
         <div class="trade-in-banner__copy">
-          <h2 class="trade-in-banner__heading">
-            <span class="trade-in-banner__heading-line">Trade in to</span>
-            <span class="trade-in-banner__heading-line trade-in-banner__heading-line--accent">UPGRADE</span>
-          </h2>
-          <p class="trade-in-banner__subtext">
-            Upgrading made easier with <span class="trade-in-banner__brand">abenson</span>
-          </p>
+          <div class="copy-container">
+            <img class="trade-in-banner__heading-img" src="./assets/hero-title.png" alt="Trade in to upgrade" />
+            <p class="trade-in-banner__subtext">
+              Upgrading made easier with
+              <span class="trade-in-banner__brand"><img src="./assets/abenson-blue.png" alt="abenson" /></span>
+            </p>
+          </div>
           <div class="trade-in-banner__ctas">
             <a href="#" class="tib-btn tib-btn--primary">Estimate your trade-in value</a>
             <a href="#" class="tib-btn tib-btn--secondary">Find out how it works</a>
@@ -196,9 +30,66 @@
           <!-- single flattened asset from design: shape + photo + badges + stars all baked in -->
           <img
             class="trade-in-banner__media-img"
-            src="trade-in-media.png"
+            src="./assets/girl.png"
             alt="Woman appraising her phone in-store, with callouts: know the value, appraise in store, upgrade with ease"
             loading="lazy" />
+        </div>
+      </div>
+    </section>
+    <!-- BRANDS SECTION -->
+    <section id="brands-section">
+      <div class="brands-section__inner">
+        <div class="brands-section__heading">
+          <h2>TRADE IN ELIGIBLE DEVICES FROM LEADING BRANDS</h2>
+        </div>
+        <div class="brands-section__logos">
+          <img class="apple-logo" src="./assets/apple-logo.png" alt="Apple" />
+          <img src="./assets/samsung-logo.png" alt="Samsung" />
+          <img src="./assets/huawei-logo.png" alt="Huawei" />
+          <img src="./assets/honor-logo.png" alt="Honor" />
+          <img src="./assets/vivo-logo.png" alt="Vivo" />
+          <img src="./assets/xiaomi-logo.png" alt="Xiaomi" />
+          <img src="./assets/realme-logo.png" alt="Realme" />
+          <img src="./assets/oppo-logo.png" alt="Oppo" />
+        </div>
+      </div>
+    </section>
+    <!-- CALCULATOR SECTION -->
+    <section id="calculator-section">
+      <div class="calculator-section__inner">
+        <div class="calculator-section__heading">
+          <h2>ESTIMATE YOUR TRADE-IN VALUE</h2>
+          <div class="calculator-section__subtext">
+            <p>Ready to upgrade? Follow these 4 easy steps to turn your old phone into value toward your new one.</p>
+          </div>
+        </div>
+        <div class="calculator-section__form">
+          <form action="#" method="post" class="trade-in-calculator-form">
+            <label for="brand">Brand</label>
+            <select name="brand" id="brand" required>
+              <option value="">Select a brand</option>
+              <option value="apple">Apple</option>
+              <option value="samsung">Samsung</option>
+              <option value="huawei">Huawei</option>
+              <option value="honor">Honor</option>
+              <option value="vivo">Vivo</option>
+              <option value="xiaomi">Xiaomi</option>
+              <option value="realme">Realme</option>
+              <option value="oppo">Oppo</option>
+            </select>
+
+            <label for="model">Device</label>
+            <select name="model" id="model" required disabled>
+              <option value="">Select a model</option>
+            </select>
+
+            <label for="condition">Storage</label>
+            <select name="condition" id="condition" required disabled>
+              <option value="">Select condition</option>
+            </select>
+
+            <button type="submit" class="tib-btn tib-btn--primary" disabled>Estimate Value</button>
+          </form>
         </div>
       </div>
     </section>
