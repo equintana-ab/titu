@@ -6,6 +6,21 @@
   --tib-blue: #3d3ddb;
   --tib-bg: #f9f8f5;
   --tib-star: #ffd23f;
+  /* How it Works */
+  --hiw-bg: #ffffff;
+  --hiw-card-bg: #f5f4f0;
+  --hiw-accent: #b7e08a; /* green top bar */
+  --hiw-text: #383d45;
+  --hiw-text-muted: #6b7078;
+  --hiw-radius: 12px;
+  --hiw-gap: 16px;
+  /* Faq Section */
+  --faq-accent: #b7e08a; /* closed pill / open header bg */
+  --faq-accent-light: #eef7e2;
+  --faq-text: #21262d;
+  --faq-text-muted: #4d525a;
+  --faq-radius: 10px;
+  --faq-gap: 24px;
 }
 
 * {
@@ -216,6 +231,332 @@ body {
   }
   .brands-section__logos {
     gap: 32px;
+  }
+}
+/* How it Works */
+#how-it-works-section {
+  background: var(--hiw-bg);
+  padding: 40px 16px;
+}
+
+.how-it-works-section__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ---- Heading ---- */
+.section__heading {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.section__heading h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--hiw-text);
+  margin: 0 0 8px;
+}
+
+.section__heading p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--hiw-text-muted);
+  margin: 0;
+}
+
+/* ---- Grid: mobile default = single column stack ---- */
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--hiw-gap);
+}
+
+/* ---- Card ---- */
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-number {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--hiw-text-muted);
+  margin-bottom: 8px;
+}
+
+/* ---- Card ---- */
+.step {
+  position: relative;
+  background: var(--hiw-card-bg);
+  border-radius: var(--hiw-radius);
+  padding: 16px;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* accent bar on every card, mobile and up */
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--hiw-accent);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.step-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.step-header h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--hiw-text);
+  margin: 0;
+}
+
+.step p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--hiw-text-muted);
+  margin: 0 0 12px;
+}
+
+.step p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ---- Buttons ---- */
+.hiw-btn--primary {
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4b3fd1;
+  background: transparent;
+  border: 1.5px solid #4b3fd1;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.hiw-btn--primary:hover,
+.hiw-btn--primary:focus-visible {
+  background: #4b3fd1;
+  color: #fff;
+}
+
+/* =========================================================
+   Tablet and up
+   ========================================================= */
+@media (min-width: 640px) {
+  #how-it-works-section {
+    padding: 80px 24px;
+  }
+
+  .step {
+    padding: 24px;
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .step-header h3 {
+    font-size: 1.125rem;
+  }
+
+  .tib-btn--primary {
+    width: auto;
+  }
+}
+
+/* =========================================================
+   Desktop: 2x2 grid
+   ========================================================= */
+@media (min-width: 768px) {
+  .section__heading h2 {
+    font-size: 1.75rem;
+  }
+
+  .section__heading p {
+    font-size: 1rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Faq Section */
+.faq-section {
+  padding: 32px 16px;
+}
+
+.faq-section__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.faq-heading {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--faq-text);
+  margin: 0 0 20px;
+}
+
+/* ---- Accordion list ---- */
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--faq-gap);
+}
+
+.faq-item {
+  border-radius: var(--faq-radius);
+  overflow: hidden;
+}
+
+/* ---- Trigger button (always visible) ---- */
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--faq-accent);
+  border: none;
+  padding: 16px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--faq-text);
+  cursor: pointer;
+  border-radius: var(--faq-radius);
+}
+
+.faq-trigger:focus-visible {
+  outline: 2px solid var(--faq-text);
+  outline-offset: 2px;
+}
+
+/* plus / close icon, drawn with two bars */
+.faq-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--faq-text);
+  transform: translate(-50%, -50%);
+}
+
+.faq-icon::before {
+  width: 16px;
+  height: 2px;
+}
+
+.faq-icon::after {
+  width: 2px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+
+/* + -> x: rotate the whole icon 45deg when the item is open */
+.faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ---- Panel (question/answer content) ---- */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.faq-item.is-open .faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel__inner {
+  min-height: 0;
+  padding: 0 16px;
+  transition: padding 0.25s ease;
+}
+.faq-item.is-open .faq-panel__inner {
+  padding: 16px;
+}
+.faq-qa + .faq-qa {
+  margin-top: 20px;
+}
+
+.faq-qa h3 {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--faq-text);
+  margin: 0 0 6px;
+}
+
+.faq-qa p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--faq-text-muted);
+  margin: 0;
+}
+
+/* =========================================================
+   Desktop: two-column layout
+   ========================================================= */
+@media (min-width: 768px) {
+  .faq-section {
+    padding: 48px 24px;
+  }
+
+  .faq-section__inner {
+    display: grid;
+    grid-template-columns: minmax(200px, 280px) 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .faq-heading {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+
+  .faq-trigger {
+    padding: 18px 20px;
+    font-size: 1rem;
+  }
+
+  .faq-item.is-open .faq-panel__inner {
+    padding: 20px 20px 4px;
   }
 }
 /* </style> */
