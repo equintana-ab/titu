@@ -1,6 +1,5 @@
-/* <style> */
 :root {
-  --tib-ink: #383d45;
+  --text-color: #383d45;
   --tib-green: #17a952;
   --tib-navy: #1e22aa;
   --tib-blue: #3d3ddb;
@@ -9,14 +8,11 @@
   /* How it Works */
   --hiw-bg: #ffffff;
   --hiw-card-bg: #f5f4f0;
-  --hiw-accent: #daf3bf; /* green top bar */
-  --hiw-text: #383d45;
+  --accent-color: #daf3bf;
   --hiw-radius: 12px;
   --hiw-text-muted: #767676;
   /* Faq Section */
-  --faq-accent: #daf3bf; /* closed pill / open header bg */
   --faq-accent-light: #eef7e2;
-  --faq-text: #383d45;
   --faq-text-muted: #4d525a;
   --faq-radius: 8px;
   --faq-gap: 24px;
@@ -27,28 +23,23 @@
   margin: 0;
   font-family: "Poppins", Helvetica, Arial, sans-serif;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   overflow-x: hidden;
 }
+
 /* ===========================================
-     BEM block: trade-in-banner
-     Full-bleed technique: same left:50%/translateX(-50%)
-     pattern used across the other CMS blocks so this
-     survives inside Magento's constrained content column.
-     ============================================ */
+   Trade-in Banner
+   ============================================ */
 #trade-in-banner {
-  /* position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw; */
   background: var(--tib-bg);
   padding: 32px 20px 40px;
 }
 
-/* Mobile base: stacked, centered */
 .trade-in-banner__inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -59,7 +50,6 @@ body {
   text-align: center;
 }
 
-/* ---------- copy side ---------- */
 .trade-in-banner__copy {
   min-width: 0;
   display: flex;
@@ -68,11 +58,13 @@ body {
   align-items: flex-start;
   text-align: start;
 }
+
 .copy-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .trade-in-banner__heading-img {
   display: block;
   width: 100%;
@@ -82,13 +74,10 @@ body {
 
 .trade-in-banner__subtext {
   font-size: clamp(20px, 3vw, 24px);
-  color: var(--tib-ink);
+  color: var(--text-color);
   font-weight: 500;
 }
-/* .trade-in-banner__brand {
-  color: var(--tib-blue);
-  font-weight: 700;
-} */
+
 .trade-in-banner__brand img {
   width: clamp(92px, 15vw, 110px);
   height: auto;
@@ -113,26 +102,29 @@ body {
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
+
 .tib-btn:hover {
   opacity: 0.85;
 }
+
 .tib-btn--primary {
   background: var(--tib-navy);
   color: #fff;
 }
+
 .tib-btn--secondary {
   background: transparent;
   color: var(--tib-navy);
   border: 1px solid var(--tib-navy);
 }
 
-/* ---------- image side ---------- */
 .trade-in-banner__media {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .trade-in-banner__media-img {
   display: block;
   width: 100%;
@@ -140,13 +132,11 @@ body {
   height: auto;
 }
 
-/* ============================================
-     Desktop and up: side-by-side layout
-     ============================================ */
 @media (min-width: 768px) {
   #trade-in-banner {
     padding: 56px 0 56px 24px;
   }
+
   .trade-in-banner__inner {
     flex-direction: row;
     align-items: center;
@@ -154,31 +144,38 @@ body {
     gap: 18px;
     text-align: left;
   }
+
   .trade-in-banner__copy {
     flex: 1 1 500px;
   }
+
   .trade-in-banner__media {
     flex: 1 1 500px;
-    /* width: auto; */
   }
+
   .trade-in-banner__media-img {
     max-width: none;
     width: 100%;
     margin-right: calc(-1 * max(0px, (100vw - 1200px) / 2) - 24px);
   }
+
   .trade-in-banner__heading-img {
     margin: 0;
   }
+
   .trade-in-banner__ctas {
     justify-content: flex-start;
   }
 }
 
-/*  BRANDS SECTION */
+/* ===========================================
+   Brands Section
+   ============================================ */
 #brands-section {
   padding: 40px 16px;
   background: #fff;
 }
+
 .brands-section__inner {
   display: flex;
   flex-direction: column;
@@ -186,16 +183,19 @@ body {
   margin: 0 auto;
   width: fit-content;
 }
+
 .brands-section__heading {
   width: 56%;
   margin: 0 auto;
   text-align: center;
 }
+
 .brands-section__heading h2 {
   color: #767676;
   font-size: clamp(12px, 3vw, 16px);
   font-weight: 600;
 }
+
 .brands-section__logos {
   display: flex;
   flex-wrap: wrap;
@@ -203,32 +203,40 @@ body {
   gap: 24px;
   align-items: center;
 }
+
 .brands-section__logos img {
   height: clamp(24px, 6vw, 40px);
   width: auto;
-  /* max-width: clamp(80px, 12vw, 140px); */
   object-fit: contain;
 }
+
 .brands-section__logos .apple-logo {
   height: clamp(20px, 3vw, 32px);
   width: auto;
 }
+
 @media (min-width: 768px) {
   #brands-section {
     padding: 64px 40px;
   }
+
   .brands-section__inner {
     align-items: flex-start;
   }
+
   .brands-section__heading {
     width: 100%;
     text-align: left;
   }
+
   .brands-section__logos {
     gap: 32px;
   }
 }
-/* How it Works */
+
+/* ===========================================
+   How It Works Section
+   ============================================ */
 #how-it-works-section {
   background: var(--hiw-bg);
   padding: 40px 16px;
@@ -240,7 +248,6 @@ body {
   margin: 0 auto;
 }
 
-/* ---- Heading ---- */
 .section__heading {
   text-align: center;
   margin-bottom: 24px;
@@ -250,27 +257,25 @@ body {
 }
 
 .section__heading h2 {
-  color: var(--hiw-text);
+  color: var(--text-color);
   margin: 0 0 8px;
   font-size: 28px;
   font-weight: 600;
 }
 
 .section__heading p {
-  color: var(--hiw-text);
+  color: var(--text-color);
   margin: 0;
   font-size: 16px;
   font-weight: 400;
 }
 
-/* ---- Grid: mobile default = single column stack ---- */
 .steps-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
 }
 
-/* ---- Card ---- */
 .step-wrapper {
   display: flex;
   flex-direction: column;
@@ -283,7 +288,6 @@ body {
   margin-bottom: 8px;
 }
 
-/* ---- Card ---- */
 .step {
   position: relative;
   background: var(--hiw-card-bg);
@@ -311,14 +315,14 @@ body {
 .step-header h3 {
   font-size: 18px;
   font-weight: 600;
-  color: var(--hiw-text);
+  color: var(--text-color);
   margin: 0;
 }
 
 .step p {
   font-size: 14px;
   font-weight: 400;
-  color: var(--hiw-text);
+  color: var(--text-color);
   margin: 0 0 12px;
 }
 
@@ -326,7 +330,6 @@ body {
   margin-bottom: 0;
 }
 
-/* ---- Buttons ---- */
 .hiw-btn--primary {
   display: inline-block;
   padding: 10px 16px;
@@ -345,25 +348,20 @@ body {
 
 .hiw-btn--primary:hover,
 .hiw-btn--primary:focus-visible {
-  background: #1e22aa;
+  background: var(--tib-navy);
   color: #fff;
 }
 
-/* =========================================================
-   Tablet and up
-   ========================================================= */
 @media (min-width: 640px) {
   #how-it-works-section {
     padding: 80px 24px;
   }
+
   .tib-btn--primary {
     width: auto;
   }
 }
 
-/* =========================================================
-   Desktop: 2x2 grid
-   ========================================================= */
 @media (min-width: 768px) {
   .section__heading p {
     max-width: 600px;
@@ -373,6 +371,7 @@ body {
   .steps-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .step::before {
     content: "";
     position: absolute;
@@ -380,11 +379,13 @@ body {
     left: 0;
     right: 0;
     height: 8px;
-    background: var(--hiw-accent);
+    background: var(--accent-color);
   }
 }
 
-/* Faq Section */
+/* ===========================================
+   FAQ Section
+   ============================================ */
 .faq-section {
   padding: 32px 16px;
 }
@@ -397,11 +398,10 @@ body {
 .faq-heading {
   font-size: 28px;
   font-weight: 600;
-  color: var(--faq-text);
+  color: var(--text-color);
   margin: 0 0 20px;
 }
 
-/* ---- Accordion list ---- */
 .faq-accordion {
   display: flex;
   flex-direction: column;
@@ -413,30 +413,28 @@ body {
   overflow: hidden;
 }
 
-/* ---- Trigger button (always visible) ---- */
 .faq-trigger {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: var(--faq-accent);
+  background: var(--accent-color);
   border: none;
   padding: 16px;
   font-size: 18px;
   font-weight: 600;
   text-align: left;
-  color: var(--faq-text);
+  color: var(--text-color);
   cursor: pointer;
   border-radius: var(--faq-radius);
 }
 
 .faq-trigger:focus-visible {
-  outline: 2px solid var(--faq-text);
+  outline: 2px solid var(--text-color);
   outline-offset: 2px;
 }
 
-/* plus / close icon, drawn with two bars */
 .faq-icon {
   position: relative;
   flex-shrink: 0;
@@ -450,7 +448,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  background: var(--faq-text);
+  background: var(--text-color);
   transform: translate(-50%, -50%);
 }
 
@@ -465,12 +463,10 @@ body {
   transition: transform 0.15s ease;
 }
 
-/* + -> x: rotate the whole icon 45deg when the item is open */
 .faq-item.is-open .faq-icon {
   transform: rotate(45deg);
 }
 
-/* ---- Panel (question/answer content) ---- */
 .faq-panel {
   display: grid;
   grid-template-rows: 0fr;
@@ -490,13 +486,15 @@ body {
   flex-direction: column;
   gap: 24px;
 }
+
 .faq-item.is-open .faq-panel__inner {
   padding: 16px;
 }
+
 .faq-qa h3 {
   font-size: 16px;
   font-weight: 600;
-  color: var(--faq-text);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -505,13 +503,10 @@ body {
 .faq-qa p {
   font-size: 14px;
   font-weight: 400;
-  color: var(--faq-text);
+  color: var(--text-color);
   margin: 0;
 }
 
-/* =========================================================
-   Desktop: two-column layout
-   ========================================================= */
 @media (min-width: 768px) {
   .faq-section {
     padding: 48px 24px;
@@ -523,14 +518,16 @@ body {
     gap: 40px;
     align-items: start;
   }
+
   .faq-heading {
     margin: 0;
   }
+
   .faq-panel__inner {
     padding: 0 20px;
   }
+
   .faq-item.is-open .faq-panel__inner {
     padding: 20px 20px 4px;
   }
 }
-/* </style> */
