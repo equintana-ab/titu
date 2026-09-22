@@ -5,7 +5,6 @@
   // ---- data source ----
   // Nested object lookup: brand -> model -> storage -> value.
   // No calculation happens at submit time — every combination's value
-  // already exists here. Swap for a fetch() call if a real pricing
   const TRADE_IN_DATA = {
     apple: {
       label: "Apple",
@@ -32,10 +31,9 @@
         },
       },
     },
-    // huawei / honor / vivo / xiaomi / realme / oppo: same shape, add when pricing is available
   };
 
-  const ESTIMATE_DELAY_MS = 600; // purely cosmetic pacing on the button, not real processing time
+  const ESTIMATE_DELAY_MS = 600;
 
   function formatPHP(amount) {
     return (

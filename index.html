@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>Trade-in Banner Prototype</title>
     <link rel="stylesheet" href="./index1.css" />
+    <link rel="stylesheet" href="./locateModal.css" />
   </head>
   <body>
     <!-- HERO SECTION -->
@@ -222,7 +223,7 @@
                 Bring your device to a participating store for a quick check. Once it passes, you'll receive your final
                 trade-in value.
               </p>
-              <a href="#store-locator" class="hiw-btn--primary">Find a nearby store</a>
+              <button type="button" class="hiw-btn--primary" id="open-button">Find a nearby store</button>
             </div>
           </div>
 
@@ -255,6 +256,33 @@
         </div>
       </div>
     </section>
+    <div id="locator-modal">
+      <div class="modal-content-locator">
+        <div class="locator-photo-panel">
+          <button type="button" class="locator-close-btn" aria-label="Close locator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M1 13L13 1M1 1L13 13"
+                stroke="#383D45"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <img id="storePhoto" src="" alt="Map preview of selected store" />
+          <a href="#" target="_blank" rel="noopener" class="get-directions-btn" id="getDirectionsBtn">Get directions</a>
+        </div>
+
+        <div class="locator-list-panel">
+          <div class="locator-header">
+            <h2>Find a store near you</h2>
+            <p>Address or ZIP Code</p>
+            <input type="text" class="locator-search" id="storeSearch" placeholder="Search your address or ZIP code" />
+          </div>
+          <div class="locator-results" id="storeResults"></div>
+        </div>
+      </div>
+    </div>
     <!-- Faq Section -->
     <section id="faq-section">
       <div class="faq-section__inner">
@@ -389,5 +417,6 @@
     </section>
     <script src="index.js"></script>
     <script src="form.js"></script>
+    <script src="locateModal.js"></script>
   </body>
 </html>

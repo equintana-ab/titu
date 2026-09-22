@@ -553,11 +553,12 @@ body {
   display: inline-block;
   padding: 10px 16px;
   width: fit-content;
+  font-size: 15px;
   font-weight: 600;
-  color: #4b3fd1;
+  color: #1e22aa;
   background: transparent;
-  border: 1.5px solid #4b3fd1;
-  border-radius: 999px;
+  border: 1px solid #1e22aa;
+  border-radius: 31px;
   cursor: pointer;
   text-decoration: none;
   transition:
