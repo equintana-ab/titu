@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./index1.css" />
   </head>
   <body>
+    <!-- HERO SECTION -->
     <section id="trade-in-banner">
       <div class="trade-in-banner__inner">
         <div class="trade-in-banner__copy">
@@ -55,44 +56,79 @@
       </div>
     </section>
     <!-- CALCULATOR SECTION -->
-    <!-- <section id="calculator-section">
+    <section id="calculator-section">
       <div class="calculator-section__inner">
-        <div class="calculator-section__heading">
-          <h2>ESTIMATE YOUR TRADE-IN VALUE</h2>
-          <div class="calculator-section__subtext">
-            <p>Ready to upgrade? Follow these 4 easy steps to turn your old phone into value toward your new one.</p>
-          </div>
+        <div class="section__heading">
+          <h2>Find your trade-in value</h2>
+          <p>Choose your device to get an estimated trade-in value and take the next step toward trading up.</p>
         </div>
         <div class="calculator-section__form">
-          <form action="#" method="post" class="trade-in-calculator-form">
-            <label for="brand">Brand</label>
-            <select name="brand" id="brand" required>
-              <option value="">Select a brand</option>
-              <option value="apple">Apple</option>
-              <option value="samsung">Samsung</option>
-              <option value="huawei">Huawei</option>
-              <option value="honor">Honor</option>
-              <option value="vivo">Vivo</option>
-              <option value="xiaomi">Xiaomi</option>
-              <option value="realme">Realme</option>
-              <option value="oppo">Oppo</option>
-            </select>
+          <form action="#" method="post" class="trade-in-calculator-form-wrapper">
+            <div class="trade-in-calculator-form">
+              <label for="brand">Brand</label>
+              <select name="brand" id="brand" required>
+                <option value="">Please select a brand</option>
+                <option value="apple">Apple</option>
+                <option value="samsung">Samsung</option>
+                <option value="huawei">Huawei</option>
+                <option value="honor">Honor</option>
+                <option value="vivo">Vivo</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="realme">Realme</option>
+                <option value="oppo">Oppo</option>
+              </select>
 
-            <label for="model">Device</label>
-            <select name="model" id="model" required disabled>
-              <option value="">Select a model</option>
-            </select>
+              <label for="model">Device</label>
+              <select name="model" id="model" required disabled>
+                <option value="">Please select a brand first</option>
+              </select>
 
-            <label for="condition">Storage</label>
-            <select name="condition" id="condition" required disabled>
-              <option value="">Select condition</option>
-            </select>
+              <label for="condition">Storage</label>
+              <select name="condition" id="condition" required disabled>
+                <option value="">Please select a device first</option>
+              </select>
+            </div>
 
-            <button type="submit" class="tib-btn tib-btn--primary" disabled>Estimate Value</button>
+            <button type="submit" class="cs-btn cs-btn--primary" disabled>Get an estimate</button>
           </form>
         </div>
+        <div class="calculator-section__result" data-tradein-result hidden>
+          <div class="trade-in-banner__content">
+            <div class="trade-in-result-card">
+              <div class="trade-in-result-card__content">
+                <img
+                  class="trade-in-result-card__image"
+                  data-tradein-result-image
+                  src=""
+                  alt=""
+                  width="200"
+                  height="200" />
+                <div class="trade-in-result-card__text">
+                  <div class="trade-in-result-card__device-info">
+                    <p class="trade-in-result-card__brand" data-tradein-result-brand></p>
+                    <p class="trade-in-result-card__device" data-tradein-result-device></p>
+                  </div>
+                  <div class="trade-in-result-card__value-container">
+                    <p class="trade-in-result-card__value-label">Estimated trade-in value*</p>
+                    <p class="trade-in-result-card__value" data-tradein-result-value></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="trade-in-result-card__disclaimer">
+              * This is the maximum estimated trade-in value for your phone's brand and model. Your final value will be
+              confirmed in the CompAsia app after the diagnostic test at a participating Abenson store.
+            </p>
+          </div>
+          <div class="trade-in-result-card__cta">
+            <a href="#how-it-works-section" class="cs-btn cs-btn--primary" data-tradein-next
+              >Ready for the next step?</a
+            >
+            <button type="button" class="trade-in-restart-link" data-tradein-restart>Start a new estimate</button>
+          </div>
+        </div>
       </div>
-    </section> -->
+    </section>
     <!-- How it Works -->
     <section id="how-it-works-section">
       <div class="how-it-works-section__inner">
@@ -220,7 +256,7 @@
       </div>
     </section>
     <!-- Faq Section -->
-    <section class="faq-section">
+    <section id="faq-section">
       <div class="faq-section__inner">
         <h2 class="faq-heading">Frequently Asked Questions</h2>
 
@@ -352,5 +388,6 @@
       </div>
     </section>
     <script src="index.js"></script>
+    <script src="form.js"></script>
   </body>
 </html>

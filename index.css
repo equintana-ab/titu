@@ -228,6 +228,7 @@ body {
     gap: 32px;
   }
 }
+
 /* How it Works */
 #how-it-works-section {
   background: var(--hiw-bg);
@@ -385,7 +386,7 @@ body {
 }
 
 /* Faq Section */
-.faq-section {
+#faq-section {
   padding: 32px 16px;
 }
 
@@ -513,23 +514,23 @@ body {
    Desktop: two-column layout
    ========================================================= */
 @media (min-width: 768px) {
-  .faq-section {
+  #faq-section {
     padding: 48px 24px;
   }
 
-  .faq-section__inner {
+  #faq-section .faq-section__inner {
     display: grid;
     grid-template-columns: minmax(200px, 280px) 1fr;
     gap: 40px;
     align-items: start;
   }
-  .faq-heading {
+  #faq-section .faq-heading {
     margin: 0;
   }
-  .faq-panel__inner {
+  #faq-section .faq-panel__inner {
     padding: 0 20px;
   }
-  .faq-item.is-open .faq-panel__inner {
+  #faq-section .faq-item.is-open .faq-panel__inner {
     padding: 20px 20px 4px;
   }
 }
