@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Locator — Google Maps Embed Prototype</title>
+    <style>
+      :root {
+        --blue: #1e22aa;
+        --blue-dark: #16309e;
+        --ink: #14161a;
+        --muted: #6b7280;
+        --line: #dcdcdc;
+        --card: #ffffff;
+        --bg: #f4f5f7;
+        --viber: #7360f2;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        font-family: "Poppins", Helvetica, Arial, sans-serif;
+      }
+      .page {
+        max-width: 960px;
+        margin: 60px auto;
+        padding: 0 20px;
+        text-align: center;
+      }
+      #open-button {
+        display: inline-flex;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        gap: 8px;
+        align-items: center;
+      }
+      #open-button:hover {
+        background: var(--blue-dark);
+      }
+
+      /* ============================================================
+     MODAL SHELL
+     mobile = bottom sheet, slides up/down
+     desktop (904px+) = centered, fixed size, fade in
+     ============================================================ */
+      #locator-modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        visibility: hidden;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 100000;
+        opacity: 0;
+        transition:
+          opacity 0.3s ease-out,
+          visibility 0.3s ease-out;
+      }
+      #locator-modal.show-modal {
+        opacity: 1;
+        visibility: visible;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content-locator {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        border-radius: 16px 16px 0 0;
+        background: #fff;
+        transform: translateY(100%);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+        transition: transform 0.3s ease-out;
+        overflow: hidden;
+        max-height: 95vh;
+        height: 95vh;
+      }
+      #locator-modal.show-modal .modal-content-locator {
+        transform: translateY(0);
+      }
+
+      /* map panel (comes first on mobile) */
+      .locator-photo-panel {
+        position: relative;
+        height: 280px;
+        flex-shrink: 0;
+        background: #cfe0ff;
+        overflow: hidden;
+      }
+      .locator-photo-panel iframe {
+        width: 100%;
+        height: calc(100% + 220px);
+        margin-top: -150px;
+        display: block;
+      }
+
+      .locator-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
+        width: 48px;
+        height: 48px;
+        border-radius: 1000px;
+        background: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow:
+          0 59px 23px 0 rgba(0, 0, 0, 0),
+          0 25px 21px 0 rgba(0, 0, 0, 0.02),
+          0 8px 18px 0 rgba(0, 0, 0, 0.08),
+          0 2px 13px 0 rgba(0, 0, 0, 0.13),
+          0 1px 7px 0 rgba(0, 0, 0, 0.15),
+          0 0 0 0 rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(25px);
+      }
+      .get-directions-btn {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 22px;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        padding: 16px;
+        border-radius: 1000px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-family: inherit;
+      }
+      .get-directions-btn:hover {
+        background: var(--blue-dark);
+      }
+
+      /* list panel */
+      .locator-list-panel {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        padding: 24px 24px 0;
+      }
+      .locator-header {
+        flex-shrink: 0;
+      }
+      .locator-header h2 {
+        margin: 0 0 16px;
+        font-size: clamp(20px, 3vw, 28px);
+        color: #383d45;
+        font-weight: 600;
+      }
+      .locator-header p {
+        margin: 0 0 10px;
+        font-size: 16px;
+        color: #383d45;
+        font-weight: 500;
+      }
+      .locator-search {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #dadce0;
+        border-radius: 28px;
+        color: #6a6f78;
+        font-size: 14px;
+      }
+      .locator-search:focus {
+        outline: 2px solid var(--blue);
+        outline-offset: 1px;
+      }
+      .locator-results {
+        flex: 1;
+        overflow-y: auto;
+        margin-top: 24px;
+        padding: 0 16px 12px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Custom scrollbar — thin, gray, rounded */
+      .locator-results {
+        scrollbar-width: thin;
+        scrollbar-color: #c7c9d1 transparent;
+      }
+      .locator-results::-webkit-scrollbar {
+        width: 6px;
+      }
+      .locator-results::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .locator-results::-webkit-scrollbar-thumb {
+        background-color: #c7c9d1;
+        border-radius: 999px;
+      }
+      .locator-results::-webkit-scrollbar-thumb:hover {
+        background-color: #a9acb6;
+      }
+
+      .store-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 16px;
+        text-align: left;
+        cursor: pointer;
+        background: #fff;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      .store-card:hover {
+        border-color: var(--blue);
+      }
+      .store-card.is-active {
+        border-color: var(--blue);
+        border: 2px solid #1e22aa;
+      }
+      .store-card:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+      }
+      .store-card h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+        color: var(--blue);
+        font-weight: 600;
+      }
+      .store-card p {
+        margin: 0 0 4px;
+        font-size: 14px;
+        color: #383d45;
+        font-weight: 400;
+      }
+      .store-card .phones {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--blue);
+        margin: 0 0 16px;
+      }
+      .phone-link {
+        color: inherit;
+        text-decoration: none;
+      }
+      .phone-link:hover {
+        text-decoration: underline;
+      }
+      .phone-sep {
+        color: var(--muted);
+      }
+      .viber-btn {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--blue);
+        color: var(--blue);
+        background: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px 16px;
+        border-radius: 31px;
+        cursor: pointer;
+      }
+      .viber-btn:hover {
+        opacity: 0.8;
+      }
+      .viber-icon {
+        flex-shrink: 0;
+        display: block;
+        width: 40px;
+        height: 40px;
+      }
+
+      /* ============================================================
+     DESKTOP
+     ============================================================ */
+      @media (width >= 904px) {
+        #locator-modal {
+          inset: 0;
+          align-items: center;
+          background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content-locator {
+          flex-direction: row;
+          width: 100%;
+          max-width: 980px;
+          height: 640px;
+          max-height: 640px;
+          border-radius: 20px;
+          transform: none;
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+        }
+        #locator-modal.show-modal .modal-content-locator {
+          transform: none;
+        }
+
+        .locator-list-panel {
+          padding: 56px 40px 0;
+        }
+        .locator-photo-panel {
+          order: 2;
+          height: auto;
+          flex: 1;
+        }
+        .locator-close-btn {
+          top: 24px;
+          right: 24px;
+          border-radius: 999px;
+          padding: 8px 14px;
+          font-size: 13px;
+        }
+        .get-directions-btn {
+          bottom: 24px;
+        }
+        .locator-results {
+          margin-top: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1 style="margin-bottom: 12px">Trade-in — How it Works</h1>
+      <p style="margin-bottom: 24px; color: var(--muted)">Step 3 triggers the store locator below.</p>
+      <button type="button" id="open-button">Find a nearby store</button>
+    </div>
+
+    <div id="locator-modal">
+      <div class="modal-content-locator">
+        <div class="locator-photo-panel">
+          <button type="button" class="locator-close-btn" aria-label="Close locator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M1 13L13 1M1 1L13 13"
+                stroke="#383D45"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <iframe
+            id="storeMapFrame"
+            src=""
+            title="Map of selected store"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <a href="#" target="_blank" rel="noopener" class="get-directions-btn" id="getDirectionsBtn">Get directions</a>
+        </div>
+
+        <div class="locator-list-panel">
+          <div class="locator-header">
+            <h2>Find a store near you</h2>
+            <p>Address or ZIP Code</p>
+            <input type="text" class="locator-search" id="storeSearch" placeholder="Search your address or ZIP code" />
+          </div>
+          <div class="locator-results" id="storeResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // ---------- store data ----------
+        // NOTE: stores #2 and #3 are reusing store #1's real embed snippet as a
+        // stand-in so this prototype shows an actual working map. Swap in the
+        // real Share > Embed a map snippet for each once you have them.
+        var WALTERMART_EMBED =
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d964.9946291763728!2d121.0211891987951!3d14.657160661230368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b6efe428d1ff%3A0xa4887123dd5d2d2f!2sAbenson%20Waltermart%20North%20EDSA!5e0!3m2!1sen!2sph!4v1790126388857!5m2!1sen!2sph";
+
+        function fetchStores() {
+          return Promise.resolve([
+            {
+              id: 1,
+              name: "Abenson Waltermart North Edsa",
+              addr: "2nd Floor Waltermart North EDSA, Veterans Village, Quezon City",
+              hours: "9AM to 9PM",
+              phones: ["(02) 8332 1045", "0918 804 1478", "0917 571 6609"],
+              viberNumber: "639178041478",
+              mapEmbed: WALTERMART_EMBED,
+              mapsQuery: "14.6555,121.0328",
+            },
+            {
+              id: 2,
+              name: "Abenson SM North EDSA",
+              addr: "Upper Ground Floor, SM North EDSA, Quezon City",
+              hours: "10AM to 9PM",
+              phones: ["(02) 8441 2200", "0917 555 0199"],
+              viberNumber: "639175550199",
+              mapEmbed: WALTERMART_EMBED, // placeholder — swap for real embed
+              mapsQuery: "14.6567,121.0303",
+            },
+            {
+              id: 3,
+              name: "Abenson TriNoma",
+              addr: "3rd Floor TriNoma Mall, North Avenue, Quezon City",
+              hours: "10AM to 9PM",
+              phones: ["(02) 8916 3344", "0918 222 4455"],
+              viberNumber: "639182224455",
+              mapEmbed: WALTERMART_EMBED, // placeholder — swap for real embed
+              mapsQuery: "14.6537,121.0322",
+            },
+          ]);
+        }
+
+        var allStores = [];
+        var activeId = null;
+
+        // ---------- open/close (button-triggered only, no drag) ----------
+        const getModal = () => document.getElementById("locator-modal");
+
+        function openModal() {
+          const modal = getModal();
+          if (!modal) return;
+          modal.classList.add("show-modal");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+          const modal = getModal();
+          if (!modal) return;
+          modal.classList.remove("show-modal");
+          document.body.style.overflow = "";
+        }
+
+        // ---------- store list rendering ----------
+        function toTelHref(display) {
+          var digits = display.replace(/\D/g, "");
+          if (digits.charAt(0) === "0") digits = "63" + digits.slice(1);
+          return "tel:+" + digits;
+        }
+
+        function renderStores(list) {
+          var resultsEl = document.getElementById("storeResults");
+          resultsEl.innerHTML = "";
+          if (!list.length) {
+            resultsEl.innerHTML =
+              '<p style="font-size:13px;color:var(--muted);padding:10px;">No stores match your search.</p>';
+            return;
+          }
+          list.forEach(function (store) {
+            var card = document.createElement("div");
+            card.setAttribute("role", "button");
+            card.tabIndex = 0;
+            card.className = "store-card" + (store.id === activeId ? " is-active" : "");
+            card.dataset.id = store.id;
+
+            var phonesHtml = store.phones
+              .map(function (num) {
+                return '<a class="phone-link" href="' + toTelHref(num) + '">' + num + "</a>";
+              })
+              .join('<span class="phone-sep"> • </span>');
+
+            card.innerHTML =
+              "<h3>" +
+              store.name +
+              "</h3>" +
+              "<p>" +
+              store.addr +
+              "</p>" +
+              "<p>Operating Hours: " +
+              store.hours +
+              "</p>" +
+              '<div class="phones">' +
+              phonesHtml +
+              "</div>" +
+              '<span class="viber-btn" data-viber="' +
+              store.viberNumber +
+              '"><svg class="viber-icon" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none"><path d="M39.533 14.0305C38.7441 13.2862 35.5512 10.9133 28.4323 10.8814C28.4323 10.8814 20.0401 10.3661 15.9526 14.2086C13.6791 16.537 12.8777 19.9533 12.7908 24.1838C12.7038 28.4143 12.5982 36.341 20.0587 38.4913H20.0649L20.0587 41.7739C20.0587 41.7739 20.009 43.1035 20.8662 43.3707C21.8974 43.7015 22.5062 42.69 23.4939 41.6022C24.0343 41.0042 24.7797 40.1263 25.345 39.4583C30.4512 39.8972 34.3709 38.8921 34.8182 38.7458C35.8494 38.4022 41.6823 37.6388 42.6265 29.7121C43.608 21.531 42.1544 16.3652 39.533 14.0305ZM40.3965 29.1141C39.5951 35.7303 34.8679 36.1502 33.9982 36.4365C33.6255 36.5573 30.1779 37.4353 25.8482 37.149C25.8482 37.149 22.618 41.1378 21.6117 42.1747C21.2824 42.5119 20.9221 42.4801 20.9284 41.8121C20.9284 41.3732 20.9532 36.3601 20.9532 36.3601C14.6295 34.5661 15.0022 27.8163 15.0705 24.2856C15.1389 20.7548 15.7911 17.8603 17.7168 15.9136C21.1768 12.7009 28.3019 13.178 28.3019 13.178C34.3212 13.2035 37.2036 15.0611 37.8744 15.6845C40.0921 17.6312 41.2227 22.288 40.3965 29.1141ZM31.7619 23.9739C31.7868 24.521 30.9854 24.5591 30.9606 24.012C30.8923 22.6125 30.2524 21.9318 28.9355 21.8554C28.4013 21.8236 28.451 21.0029 28.979 21.0347C30.7121 21.1302 31.675 22.148 31.7619 23.9739ZM33.0229 24.6927C33.0851 21.9954 31.4389 19.8833 28.3143 19.6479C27.7863 19.6097 27.8422 18.7891 28.3702 18.8272C31.9731 19.0944 33.8926 21.6327 33.8243 24.7118C33.8181 25.2589 33.0105 25.2335 33.0229 24.6927ZM35.9425 25.5452C35.9487 26.0923 35.1412 26.0987 35.1412 25.5516C35.1039 20.3668 31.7309 17.5422 27.6372 17.5104C27.1092 17.504 27.1092 16.6897 27.6372 16.6897C32.2154 16.7215 35.8991 19.9596 35.9425 25.5452ZM35.2406 31.7861V31.7988C34.5697 33.0075 33.3149 34.3435 32.0228 33.9172L32.0104 33.8981C30.6997 33.5228 27.6124 31.8942 25.6618 30.3038C24.6555 29.4895 23.7361 28.5289 23.028 27.6064C22.3882 26.7857 21.7421 25.8124 21.1147 24.6418C19.7916 22.1926 19.4996 21.0984 19.4996 21.0984C19.0834 19.7751 20.3817 18.4901 21.5682 17.803H21.5806C22.1521 17.4976 22.6988 17.5994 23.0653 18.0511C23.0653 18.0511 23.8355 18.9926 24.1648 19.457C24.4754 19.8896 24.8916 20.5831 25.109 20.9711C25.4879 21.6646 25.2518 22.3707 24.8791 22.6633L24.1337 23.2741C23.7548 23.5858 23.8045 24.1647 23.8045 24.1647C23.8045 24.1647 24.9102 28.4461 29.0411 29.5276C29.0411 29.5276 29.6064 29.5785 29.9108 29.1905L30.5071 28.4271C30.7929 28.0454 31.4824 27.8036 32.1595 28.1917C33.0726 28.7197 34.2343 29.5404 35.0045 30.2847C35.4394 30.6473 35.5388 31.2008 35.2406 31.7861Z" fill="#3F59D9"></path></svg>Chat on Viber</span>';
+            resultsEl.appendChild(card);
+          });
+        }
+
+        function selectStore(id) {
+          activeId = id;
+          var store = allStores.find(function (s) {
+            return s.id === id;
+          });
+          if (!store) return;
+
+          document.querySelectorAll(".store-card").forEach(function (c) {
+            c.classList.toggle("is-active", Number(c.dataset.id) === id);
+          });
+
+          var mapFrame = document.getElementById("storeMapFrame");
+          var directionsBtn = document.getElementById("getDirectionsBtn");
+          mapFrame.src = store.mapEmbed;
+          mapFrame.title = "Map of " + store.name;
+          directionsBtn.href =
+            "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(store.mapsQuery);
+        }
+
+        document.addEventListener("click", function (e) {
+          const modal = getModal();
+
+          if (e.target.closest("#open-button")) {
+            openModal();
+            return;
+          }
+          if (e.target.closest(".locator-close-btn")) {
+            closeModal();
+            return;
+          }
+          if (e.target === modal) {
+            closeModal();
+            return;
+          }
+          var viberEl = e.target.closest(".viber-btn");
+          if (viberEl) {
+            e.stopPropagation();
+            window.location.href = "viber://chat?number=%2B" + viberEl.dataset.viber;
+            return;
+          }
+          if (e.target.closest(".phone-link")) {
+            e.stopPropagation();
+            return;
+          }
+          var card = e.target.closest(".store-card");
+          if (card) {
+            selectStore(Number(card.dataset.id));
+            return;
+          }
+        });
+
+        document.addEventListener("click", function (e) {
+          const modal = getModal();
+          if (e.target.closest(".modal-content-locator") && e.target !== modal) {
+            e.stopPropagation();
+          }
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeModal();
+            return;
+          }
+          if (e.key === "Enter" || e.key === " ") {
+            var card = e.target.closest(".store-card");
+            if (card) {
+              e.preventDefault();
+              selectStore(Number(card.dataset.id));
+            }
+          }
+        });
+
+        document.getElementById("storeSearch").addEventListener("input", function () {
+          var q = this.value.toLowerCase();
+          var filtered = allStores.filter(function (s) {
+            return s.name.toLowerCase().includes(q) || s.addr.toLowerCase().includes(q);
+          });
+          renderStores(filtered);
+        });
+
+        fetchStores()
+          .then(function (stores) {
+            allStores = stores;
+            renderStores(stores);
+            if (stores.length) selectStore(stores[0].id);
+          })
+          .catch(function () {
+            renderStores([]);
+          });
+      })();
+    </script>
+  </body>
+</html>

@@ -29,7 +29,6 @@
         </div>
 
         <div class="trade-in-banner__media">
-          <!-- single flattened asset from design: shape + photo + badges + stars all baked in -->
           <img
             class="trade-in-banner__media-img"
             src="./assets/girl.png"
@@ -223,7 +222,7 @@
                 Bring your device to a participating store for a quick check. Once it passes, you'll receive your final
                 trade-in value.
               </p>
-              <button type="button" class="hiw-btn--primary" id="open-button">Find a nearby store</button>
+              <button type="button" class="hiw-btn--primary" id="sl-open-button">Find a nearby store</button>
             </div>
           </div>
 
@@ -256,9 +255,9 @@
         </div>
       </div>
     </section>
-    <div id="locator-modal">
-      <div class="modal-content-locator">
-        <div class="locator-photo-panel">
+    <div id="sl-modal">
+      <div class="sl-modal-content">
+        <div class="locator-map-panel">
           <button type="button" class="locator-close-btn" aria-label="Close locator">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -269,17 +268,198 @@
                 stroke-linejoin="round" />
             </svg>
           </button>
-          <img id="storePhoto" src="" alt="Map preview of selected store" />
-          <a href="#" target="_blank" rel="noopener" class="get-directions-btn" id="getDirectionsBtn">Get directions</a>
+          <div class="locator-searching" id="slSearching">
+            <svg
+              width="264"
+              height="264"
+              viewBox="0 0 328 328"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <style>
+                #sl-animated-shop-panel {
+                  overflow: visible;
+                }
+                @keyframes sl_kf_mg1_panel {
+                  0% {
+                    transform: translateX(219px) translateY(205px) translate(43.164px, 43.164px) scale(0)
+                      translate(-43.164px, -43.164px);
+                  }
+                  5.56% {
+                    transform: translateX(219px) translateY(205px) translate(43.164px, 43.164px) scale(0.5)
+                      translate(-43.164px, -43.164px);
+                  }
+                  11.11%,
+                  33.33% {
+                    transform: translateX(219px) translateY(205px) translate(43.164px, 43.164px) scale(1)
+                      translate(-43.164px, -43.164px);
+                  }
+                  38.89% {
+                    transform: translateX(219px) translateY(205px) translate(43.164px, 43.164px) scale(0.5)
+                      translate(-43.164px, -43.164px);
+                  }
+                  44.44%,
+                  100% {
+                    transform: translateX(219px) translateY(205px) translate(43.164px, 43.164px) scale(0)
+                      translate(-43.164px, -43.164px);
+                  }
+                }
+                #sl-mg1-panel {
+                  transform-origin: 0 0;
+                  animation: sl_kf_mg1_panel 9s linear infinite;
+                }
+                @keyframes sl_kf_mg3_panel {
+                  0% {
+                    transform: translateX(199px) translateY(84.209px) translate(56.151px, 23.943px) scale(1)
+                      translate(-56.151px, -23.943px) rotate(-0.382rad);
+                  }
+                  5.56% {
+                    transform: translateX(199px) translateY(84.209px) translate(56.151px, 23.943px) scale(0.315)
+                      translate(-56.151px, -23.943px) rotate(-0.382rad);
+                  }
+                  11.11%,
+                  66.67% {
+                    transform: translateX(199px) translateY(84.209px) translate(56.151px, 23.943px) scale(0)
+                      translate(-56.151px, -23.943px) rotate(-0.382rad);
+                  }
+                  72.22% {
+                    transform: translateX(199px) translateY(84.209px) translate(56.151px, 23.943px) scale(0.685)
+                      translate(-56.151px, -23.943px) rotate(-0.382rad);
+                  }
+                  77.78%,
+                  100% {
+                    transform: translateX(199px) translateY(84.209px) translate(56.151px, 23.943px) scale(1)
+                      translate(-56.151px, -23.943px) rotate(-0.382rad);
+                  }
+                }
+                #sl-mg3-panel {
+                  transform-origin: 0 0;
+                  animation: sl_kf_mg3_panel 9s linear infinite;
+                }
+                @keyframes sl_kf_mg2_panel {
+                  0%,
+                  33.33% {
+                    transform: translateX(152.328px) translateY(156px) translate(-43.164px, 43.164px) scale(0)
+                      translate(43.164px, -43.164px) rotate(3.142rad) scaleY(-1);
+                  }
+                  38.89% {
+                    transform: translateX(152.328px) translateY(156px) translate(-43.164px, 43.164px) scale(0.5)
+                      translate(43.164px, -43.164px) rotate(3.142rad) scaleY(-1);
+                  }
+                  44.44%,
+                  66.67% {
+                    transform: translateX(152.328px) translateY(156px) translate(-43.164px, 43.164px) scale(1)
+                      translate(43.164px, -43.164px) rotate(3.142rad) scaleY(-1);
+                  }
+                  72.22% {
+                    transform: translateX(152.328px) translateY(156px) translate(-43.164px, 43.164px) scale(0.5)
+                      translate(43.164px, -43.164px) rotate(3.142rad) scaleY(-1);
+                  }
+                  77.78%,
+                  100% {
+                    transform: translateX(152.328px) translateY(156px) translate(-43.164px, 43.164px) scale(0)
+                      translate(43.164px, -43.164px) rotate(3.142rad) scaleY(-1);
+                  }
+                }
+                #sl-mg2-panel {
+                  transform-origin: 0 0;
+                  animation: sl_kf_mg2_panel 9s linear infinite;
+                }
+              </style>
+              <g id="sl-animated-shop-panel">
+                <rect width="328" height="328" fill="#1E22AA" />
+                <g transform="translate(58 80)">
+                  <path
+                    transform="translate(47.5686 88.2202)"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.7399 68.5295V0.00782228C22.8536 5.28294 35.8457 5.27511 46.9595 0.00782228C52.4626 2.61807 58.4785 3.96831 64.5693 3.96024C70.8618 3.96024 76.8413 2.53581 82.1791 0C87.6815 2.61295 93.6975 3.96586 99.7889 3.96024C106.081 3.96024 112.053 2.53581 117.399 0C128.512 5.27511 141.505 5.28294 152.618 0.00782228V68.5295H158.488C160.045 68.5295 161.538 69.1479 162.639 70.2488C163.74 71.3496 164.358 72.8426 164.358 74.3994C164.358 75.9562 163.74 77.4493 162.639 78.5501C161.538 79.6509 160.045 80.2694 158.488 80.2694H5.86993C4.31313 80.2694 2.82009 79.6509 1.71926 78.5501C0.618438 77.4493 0 75.9562 0 74.3994C0 72.8426 0.618438 71.3496 1.71926 70.2488C2.82009 69.1479 4.31313 68.5295 5.86993 68.5295H11.7399ZM35.2196 21.57C35.2196 20.0132 35.838 18.5202 36.9389 17.4194C38.0397 16.3186 39.5327 15.7001 41.0895 15.7001H64.5693C66.1261 15.7001 67.6191 16.3186 68.7199 17.4194C69.8207 18.5202 70.4392 20.0132 70.4392 21.57V45.0498C70.4392 46.6066 69.8207 48.0996 68.7199 49.2004C67.6191 50.3013 66.1261 50.9197 64.5693 50.9197H41.0895C39.5327 50.9197 38.0397 50.3013 36.9389 49.2004C35.838 48.0996 35.2196 46.6066 35.2196 45.0498V21.57ZM99.7889 15.7001C98.232 15.7001 96.739 16.3186 95.6382 17.4194C94.5374 18.5202 93.9189 20.0132 93.9189 21.57V62.6596C93.9189 65.8998 96.5487 68.5295 99.7889 68.5295H123.269C124.825 68.5295 126.318 67.9111 127.419 66.8102C128.52 65.7094 129.139 64.2164 129.139 62.6596V21.57C129.139 20.0132 128.52 18.5202 127.419 17.4194C126.318 16.3186 124.825 15.7001 123.269 15.7001H99.7889Z"
+                    fill="#6AABFF" />
+                  <g transform="translate(-8 -8)">
+                    <path
+                      transform="translate(55.5458 23.8711)"
+                      d="M29.1604 0C25.2706 0 21.5373 1.54966 18.7902 4.30462L8.61562 14.4635C3.35794 19.7114 0.285866 26.7578 0.0189665 34.1816C-0.247933 41.6054 2.3102 48.8543 7.17745 54.4662C12.0447 60.0781 18.8589 63.6356 26.2459 64.4212C33.6328 65.2068 41.0428 63.1621 46.9815 58.6993C51.8888 62.3778 57.9857 64.5693 64.5913 64.5693C71.1969 64.5693 77.3017 62.3778 82.2011 58.6993C87.1005 62.3778 93.2053 64.5693 99.8109 64.5693C106.417 64.5693 112.513 62.3778 117.421 58.6993C123.359 63.1621 130.769 65.2068 138.156 64.4212C145.543 63.6356 152.357 60.0781 157.225 54.4662C162.092 48.8543 164.65 41.6054 164.383 34.1816C164.116 26.7578 161.044 19.7114 155.787 14.4635L145.612 4.29679C142.861 1.54681 139.131 0.00134946 135.242 0H29.1604Z"
+                      fill="#6AABFF" />
+                    <g transform="translate(0 17.4885) rotate(-9.86255)">
+                      <path
+                        d="M51.0508 0C58.748 7.20196e-05 65.2174 5.25281 67.0723 12.3691C73.416 8.64827 81.7064 9.50913 87.1494 14.9521C92.5923 20.3951 93.4521 28.6846 89.7314 35.0283C96.8482 36.8829 102.102 43.3532 102.102 51.0508C102.102 58.7484 96.8482 65.2186 89.7314 67.0732C93.4521 73.4169 92.5914 81.7065 87.1484 87.1494C81.7053 92.5922 73.4159 93.4524 67.0723 89.7314C65.2176 96.8481 58.7483 102.102 51.0508 102.102C43.4263 102.102 37.0066 96.9474 35.083 89.9336C28.5262 93.4352 20.343 92.5403 14.9521 87.1494C9.63939 81.8367 8.69257 73.8114 12.1104 67.5312C5.00353 64.9047 6.22939e-05 58.563 0 51.0508C0 43.5388 5.00288 37.1961 11.8584 35.1709C8.69354 28.2884 9.64079 20.2645 14.9531 14.9521C20.3436 9.56191 28.5256 8.66634 34.8447 12.2637C37.0068 5.15352 43.4265 0 51.0508 0Z"
+                        fill="#006DE2" />
+                      <image
+                        transform="translate(26.2151 29.4346)"
+                        width="49.8586"
+                        height="43.9864"
+                        preserveAspectRatio="none"
+                        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABYCAMAAAA0hKKwAAADAFBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+/LkhhAAABAHRSTlMAJEltkrbb////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2daQCwAAAk1JREFUeNrtmkd2AzEIQId+/xtHHjuOCyogjVZhacf6D5CoOY62ABKLqNpdVIUJ4Vgm5Xz5PfxdVAiWAFisKTrJgZoGH8J5DImNilJOCVaLiCSUQYuKYhgiFhfcAQlTOAMxuNonp1+ClysFMYlRNEfB6z0fNVjO82Z0veeDqiQ9H/TKt+dveaokqrtQLbZJ2vMlOX1nQeDpF0nP87maZUEnXX8eUAD9P5qxF9BAXsXp2JJ8T7AcApPvMXvVeYe9ZD2Ednged0Bgx/U6tkB0vjbaBrm1JqU3ecgZ7qEFofD57Bf2qoW1AgK9uv7sgWQGgmO1BE9ogmJpGYTABGIUQmaXQ8Quh4Da5ZB5Rh+ygNGFrGB0IWLXQzp3Vx8yBYFWlEJ4hl6AesHdhUhoRFONnxRvfFqjBj/CUViRTqmGGoNAqnEK1qmcas6CEA3bKg6BXGsWg1BKkSBEcu1yDOK45NgA0fWQZB/7D9nqk6FuRmav8MA7YZt9jJxitCCccApHMyPFS4J4+sXohAx1pJAovVppAKE1ClZIzFvJUVaw8asaBXWk7qKvT3Hcwu0+jHw3c2t0rh8rK+wtiajiZWxb+VwqnoNaHlilUcXJOjVw9iHof8FLIbVxm66ESCWf40pItWjgHZCEwVSGzaXJpvHWWKAPoXo+j1HIMzLVEjNmGuDnwlfdx8itwoTHLeX+gipxHYZDrLsdBx/ybhQcW/LUF/Dkx+2X3Ont0lv7eHVWN6R/gm9J4TxHqDofVDceRyey8DIBcDn0DO2qIjz7vx0/NXl0AC+mC+kAAAAASUVORK5CYII=" />
+                    </g>
+                  </g>
+                </g>
+                <g id="sl-mg1-panel" transform="translate(219 205)">
+                  <circle
+                    opacity="0.3"
+                    transform="translate(4.21088 5.26391)"
+                    cx="32.1097"
+                    cy="32.1097"
+                    r="32.1097"
+                    fill="white" />
+                  <path
+                    transform="translate(0.662476 0.662724)"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M35.9271 6.52782C32.0669 6.52782 28.2445 7.28818 24.6781 8.7655C21.1118 10.2428 17.8713 12.4081 15.1418 15.1379C12.4122 17.8676 10.247 21.1082 8.76975 24.6748C7.29251 28.2413 6.53219 32.0639 6.53219 35.9243C6.53219 39.7847 7.29251 43.6073 8.76975 47.1739C10.247 50.7404 12.4122 53.9811 15.1418 56.7108C17.8713 59.4405 21.1118 61.6059 24.6781 63.0832C28.2445 64.5605 32.0669 65.3209 35.9271 65.3209C43.7231 65.3209 51.1998 62.2237 56.7124 56.7108C62.225 51.1979 65.3219 43.7208 65.3219 35.9243C65.3219 28.1279 62.225 20.6508 56.7124 15.1379C51.1998 9.62495 43.7231 6.52782 35.9271 6.52782ZM2.17228e-07 35.9243C0.000761965 30.1543 1.3911 24.4694 4.0534 19.3504C6.7157 14.2313 10.5716 9.82885 15.2951 6.51528C20.0185 3.20171 25.4705 1.07455 31.1898 0.313722C36.9091 -0.447105 42.7275 0.180786 48.1528 2.14428C53.5782 4.10778 58.4509 7.34912 62.3587 11.5941C66.2665 15.8391 69.0946 20.9629 70.6036 26.5321C72.1126 32.1012 72.2582 37.952 71.0281 43.5893C69.798 49.2266 67.2283 54.4848 63.5365 58.9189L83.9605 79.3441C84.2814 79.6431 84.5387 80.0037 84.7173 80.4044C84.8958 80.805 84.9918 81.2375 84.9995 81.6761C85.0072 82.1147 84.9266 82.5503 84.7623 82.957C84.598 83.3637 84.3535 83.7332 84.0434 84.0433C83.7332 84.3535 83.3638 84.598 82.9571 84.7623C82.5504 84.9266 82.1148 85.0072 81.6763 84.9995C81.2377 84.9918 80.8052 84.8958 80.4046 84.7172C80.004 84.5387 79.6434 84.2813 79.3444 83.9604L58.9204 63.5353C53.6738 67.9055 47.2906 70.6901 40.5184 71.5628C33.7463 72.4354 26.8657 71.36 20.6827 68.4626C14.4997 65.5652 9.27042 60.9657 5.60738 55.2029C1.94433 49.4402 -0.000750502 42.7529 2.17228e-07 35.9243Z"
+                    fill="#BADFFF" />
+                </g>
+                <g id="sl-mg3-panel" transform="translate(199 84.2088) rotate(-21.9069)">
+                  <circle
+                    opacity="0.3"
+                    transform="translate(4.21088 5.26391)"
+                    cx="32.1097"
+                    cy="32.1097"
+                    r="32.1097"
+                    fill="white" />
+                  <path
+                    transform="translate(0.737889 0.845333)"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M35.9271 6.52782C32.0669 6.52782 28.2445 7.28818 24.6781 8.7655C21.1118 10.2428 17.8713 12.4081 15.1418 15.1379C12.4122 17.8676 10.247 21.1082 8.76975 24.6748C7.29251 28.2413 6.53219 32.0639 6.53219 35.9243C6.53219 39.7847 7.29251 43.6073 8.76975 47.1739C10.247 50.7404 12.4122 53.9811 15.1418 56.7108C17.8713 59.4405 21.1118 61.6059 24.6781 63.0832C28.2445 64.5605 32.0669 65.3209 35.9271 65.3209C43.7231 65.3209 51.1998 62.2237 56.7124 56.7108C62.225 51.1979 65.3219 43.7208 65.3219 35.9243C65.3219 28.1279 62.225 20.6508 56.7124 15.1379C51.1998 9.62495 43.7231 6.52782 35.9271 6.52782ZM2.17228e-07 35.9243C0.000761965 30.1543 1.3911 24.4694 4.0534 19.3504C6.7157 14.2313 10.5716 9.82885 15.2951 6.51528C20.0185 3.20171 25.4705 1.07455 31.1898 0.313722C36.9091 -0.447105 42.7275 0.180786 48.1528 2.14428C53.5782 4.10778 58.4509 7.34912 62.3587 11.5941C66.2665 15.8391 69.0946 20.9629 70.6036 26.5321C72.1126 32.1012 72.2582 37.952 71.0281 43.5893C69.798 49.2266 67.2283 54.4848 63.5365 58.9189L83.9605 79.3441C84.2814 79.6431 84.5387 80.0037 84.7173 80.4044C84.8958 80.805 84.9918 81.2375 84.9995 81.6761C85.0072 82.1147 84.9266 82.5503 84.7623 82.957C84.598 83.3637 84.3535 83.7332 84.0434 84.0433C83.7332 84.3535 83.3638 84.598 82.9571 84.7623C82.5504 84.9266 82.1148 85.0072 81.6763 84.9995C81.2377 84.9918 80.8053 84.8958 80.4046 84.7172C80.004 84.5387 79.6434 84.2813 79.3444 83.9604L58.9204 63.5353C53.6738 67.9055 47.2906 70.6901 40.5184 71.5628C33.7463 72.4354 26.8657 71.36 20.6827 68.4626C14.4997 65.5652 9.27042 60.9657 5.60738 55.2029C1.94433 49.4402 -0.000750502 42.7529 2.17228e-07 35.9243Z"
+                    fill="#BADFFF" />
+                </g>
+                <g id="sl-mg2-panel" transform="matrix(-1 0 0 1 152.328 156)">
+                  <circle
+                    opacity="0.3"
+                    transform="translate(4.21099 5.26386)"
+                    cx="32.1097"
+                    cy="32.1097"
+                    r="32.1097"
+                    fill="white" />
+                  <path
+                    transform="translate(2.32764 -1) rotate(2.27879)"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M35.9271 6.52782C32.0669 6.52782 28.2445 7.28818 24.6781 8.7655C21.1118 10.2428 17.8713 12.4081 15.1418 15.1379C12.4122 17.8676 10.247 21.1082 8.76975 24.6748C7.29251 28.2413 6.53219 32.0639 6.53219 35.9243C6.53219 39.7847 7.29251 43.6073 8.76975 47.1739C10.247 50.7404 12.4122 53.9811 15.1418 56.7108C17.8713 59.4405 21.1118 61.6059 24.6781 63.0832C28.2445 64.5605 32.0669 65.3209 35.9271 65.3209C43.7231 65.3209 51.1998 62.2237 56.7124 56.7108C62.225 51.1979 65.3219 43.7208 65.3219 35.9243C65.3219 28.1279 62.225 20.6508 56.7124 15.1379C51.1998 9.62495 43.7231 6.52782 35.9271 6.52782ZM2.17228e-07 35.9243C0.000761965 30.1543 1.3911 24.4694 4.0534 19.3504C6.7157 14.2313 10.5716 9.82885 15.2951 6.51528C20.0185 3.20171 25.4705 1.07455 31.1898 0.313722C36.9091 -0.447105 42.7275 0.180786 48.1528 2.14428C53.5782 4.10778 58.4509 7.34912 62.3587 11.5941C66.2665 15.8391 69.0946 20.9629 70.6036 26.5321C72.1126 32.1012 72.2582 37.952 71.0281 43.5893C69.798 49.2266 67.2283 54.4848 63.5365 58.9189L83.9605 79.3441C84.2814 79.6431 84.5387 80.0037 84.7173 80.4044C84.8958 80.805 84.9918 81.2375 84.9995 81.6761C85.0072 82.1147 84.9266 82.5503 84.7623 82.957C84.598 83.3637 84.3535 83.7332 84.0434 84.0433C83.7332 84.3535 83.3638 84.598 82.9571 84.7623C82.5504 84.9266 82.1148 85.0072 81.6763 84.9995C81.2377 84.9918 80.8053 84.8958 80.4046 84.7172C80.004 84.5387 79.6434 84.2813 79.3444 83.9604L58.9204 63.5353C53.6738 67.9055 47.2906 70.6901 40.5184 71.5628C33.7463 72.4354 26.8657 71.36 20.6827 68.4626C14.4997 65.5652 9.27042 60.9657 5.60738 55.2029C1.94433 49.4402 -0.000750502 42.7529 2.17228e-07 35.9243Z"
+                    fill="#BADFFF" />
+                </g>
+              </g>
+            </svg>
+          </div>
+          <iframe
+            id="slStoreMapFrame"
+            src=""
+            title="Map of selected store"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <a href="#" target="_blank" rel="noopener" class="sl-get-directions-btn" id="slGetDirectionsBtn"
+            >Get directions</a
+          >
         </div>
 
         <div class="locator-list-panel">
           <div class="locator-header">
             <h2>Find a store near you</h2>
-            <p>Address or ZIP Code</p>
-            <input type="text" class="locator-search" id="storeSearch" placeholder="Search your address or ZIP code" />
+            <input type="text" class="locator-search" id="slStoreSearch" placeholder="Enter your city" />
           </div>
-          <div class="locator-results" id="storeResults"></div>
+          <div class="locator-results" id="slStoreResults"></div>
         </div>
       </div>
     </div>
@@ -343,8 +523,47 @@
             <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-header-2" hidden>
               <div class="faq-panel__inner">
                 <div class="faq-qa">
-                  <h3><!-- question --></h3>
-                  <p><!-- answer --></p>
+                  <h3>How is my old phone evaluated and appraised?</h3>
+                  <p>
+                    Simply surrender your smartphone to our store TITU point person. They will perform a step-by-step
+                    diagnostic test using the Compasia system. Once completed, the final appraised value and individual
+                    PDF receipt will be displayed directly on the mobile app.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>How long is my device valuation receipt valid?</h3>
+                  <p>
+                    The final appraised value shown on your app-generated PDF receipt is valid for 24 hours only. Each
+                    traded-in device receives its own individual receipt.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>How do store officers verify my trade-in valuation?</h3>
+                  <p>
+                    Before applying your discount at checkout, our Store Officers will validate your presented app
+                    receipt through the official Compasia application system.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>How do you determine the trade-in value of my smartphone?</h3>
+                  <p>
+                    Your trade-in value is calculated through the official CompAsia valuation system, which assesses
+                    your device's model, physical condition, and functional health.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>What documents do I need to bring for trade-in?</h3>
+                  <p>
+                    None! No valid IDs, receipts, or complex paperwork are required to submit your device for valuation.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>Is my personal data safe when I trade in my old device?</h3>
+                  <p>
+                    Yes. All trade-in transactions and data handling are strictly managed in full compliance with the
+                    Data Privacy Act of 2012. We recommend performing a factory reset before surrendering your phone,
+                    but store officers also ensure proper device wipes.
+                  </p>
                 </div>
               </div>
             </div>
@@ -364,8 +583,24 @@
             <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-header-3" hidden>
               <div class="faq-panel__inner">
                 <div class="faq-qa">
-                  <h3><!-- question --></h3>
-                  <p><!-- answer --></p>
+                  <h3>How long does the entire trade-in and upgrade process take?</h3>
+                  <p>Timelines depend on the availability of your chosen trade-up unit:</p>
+                  <ul>
+                    <li><strong>In-Stock Store Units:</strong> Same-day processing and release.</li>
+                    <li><strong>Out-of-Stock Store Units:</strong> 3 to 5 business days for unit transfer.</li>
+                    <li>
+                      <strong>Pre-Order Units: </strong> Delivery or pickup timing varies depending on the official
+                      launch/release date of the pre-ordered phone.
+                    </li>
+                  </ul>
+                </div>
+                <div class="faq-qa">
+                  <h3>Are all Abenson stores participating in the Trade In, Trade Up program?</h3>
+                  <p>
+                    Most major Abenson flagship stores and Electroworld branches nationwide support in-store trade-in
+                    assessments. You can view the complete list of participating branches on our official Store Locator
+                    page.
+                  </p>
                 </div>
               </div>
             </div>
@@ -385,8 +620,27 @@
             <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-header-4" hidden>
               <div class="faq-panel__inner">
                 <div class="faq-qa">
-                  <h3><!-- question --></h3>
-                  <p><!-- answer --></p>
+                  <h3>How does the trade-in value affect the price of my new phone or tablet?</h3>
+                  <p>
+                    The net appraised value acts as a direct discount applied on top of the main unit price (SRP) of
+                    your chosen mobile device, tablet, or Macbook.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>Is this promo compatible with all phones and pre-orders?</h3>
+                  <p>
+                    The trade up mechanic is applicable to all available phones and select pre-order units within the
+                    promo period.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>
+                    Can I still avail of other store promos, freebies, or discounts on top of my trade-in discount?
+                  </h3>
+                  <p>
+                    Yes! You can still stack existing store promos (such as freebies, unit discounts, and add-ons) on
+                    top of your final trade-in valuation discount.
+                  </p>
                 </div>
               </div>
             </div>
@@ -406,8 +660,20 @@
             <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-header-5" hidden>
               <div class="faq-panel__inner">
                 <div class="faq-qa">
-                  <h3><!-- question --></h3>
-                  <p><!-- answer --></p>
+                  <h3>Can I cash out my trade-in amount or buy a phone with zero cash out?</h3>
+                  <p>
+                    Trade-in values and promo discounts are strictly non-convertible to cash. If your trade-in voucher
+                    covers 100% of the new phone's SRP, no extra payment is required.
+                  </p>
+                </div>
+                <div class="faq-qa">
+                  <h3>What payment options are available for any remaining balance?</h3>
+                  <p>
+                    After your trade-in value is deducted from the new device's SRP, you can pay the remaining balance
+                    using any of the following accepted payment methods:
+                  </p>
+                  <p><strong>Straight Payment:</strong> Cash, Debit Card, Cash Card, or Credit Card.</p>
+                  <p><strong>Installment:</strong> 0% Credit Card Installment plan options.</p>
                 </div>
               </div>
             </div>

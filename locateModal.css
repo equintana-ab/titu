@@ -1,25 +1,14 @@
-/* <style> */
 :root {
-  --blue: #1e22aa;
-  --blue-dark: #16309e;
-  --text: #383d45;
-  --muted: #6b7280;
-  --line: #dcdcdc;
+  --sl-blue: #1e22aa;
+  --sl-blue-dark: #16309e;
+  --sl-text: #383d45;
+  --sl-muted: #6b7280;
+  --sl-line: #dcdcdc;
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  font-family: "Poppins", Helvetica, Arial, sans-serif;
-}
-.page {
-  max-width: 960px;
-  margin: 60px auto;
-  padding: 0 20px;
-  text-align: center;
-}
-#open-button {
+
+#sl-open-button {
   display: inline-flex;
-  background: var(--blue);
+  background: var(--sl-blue);
   color: #fff;
   border: none;
   padding: 14px 28px;
@@ -30,16 +19,11 @@
   gap: 8px;
   align-items: center;
 }
-#open-button:hover {
-  background: var(--blue-dark);
+#sl-open-button:hover {
+  background: var(--sl-blue-dark);
 }
 
-/* ============================================================
-     MODAL SHELL — same mechanics as the FAQ modal:
-     mobile = bottom sheet, slides up/down
-     desktop (904px+) = centered, fixed size, fade in
-     ============================================================ */
-#locator-modal {
+#sl-modal {
   position: fixed;
   inset: 0;
   display: flex;
@@ -52,13 +36,13 @@
     opacity 0.3s ease-out,
     visibility 0.3s ease-out;
 }
-#locator-modal.show-modal {
+#sl-modal.sl-show-modal {
   opacity: 1;
   visibility: visible;
   background: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content-locator {
+.sl-modal-content {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -72,22 +56,51 @@
   max-height: 95vh;
   height: 95vh;
 }
-#locator-modal.show-modal .modal-content-locator {
+#sl-modal.sl-show-modal .sl-modal-content {
   transform: translateY(0);
 }
 
-/* photo panel (comes first on mobile) */
-.locator-photo-panel {
+/* map panel (comes first on mobile) */
+.locator-map-panel {
   position: relative;
   height: 280px;
   flex-shrink: 0;
-  background: #cfe0ff;
+  background: #f4f2f2;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
 }
-.locator-photo-panel img {
+
+.locator-map-panel iframe {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: calc(100% + 220px);
+  margin-top: -150px;
   display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.locator-map-panel iframe.sl-is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.locator-searching {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  background-color: #1e22aa;
+}
+.locator-searching.sl-is-hidden {
+  opacity: 0;
+}
+.locator-searching svg {
+  max-width: 78%;
+  max-height: 78%;
 }
 .locator-close-btn {
   position: absolute;
@@ -112,12 +125,14 @@
     0 0 0 0 rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(25px);
 }
-.get-directions-btn {
+
+/* Get directions: fades/slides in instead of display none -> block */
+.sl-get-directions-btn {
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 17px;
-  background: var(--blue);
+  left: 10px;
+  right: 10px;
+  bottom: 22px;
+  background: var(--sl-blue);
   color: #fff;
   border: none;
   padding: 12px 16px;
@@ -128,10 +143,22 @@
   text-align: center;
   text-decoration: none;
   display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
   font-family: inherit;
 }
-.get-directions-btn:hover {
-  background: var(--blue-dark);
+.sl-get-directions-btn.sl-is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.sl-get-directions-btn:hover {
+  background: var(--sl-blue-dark);
 }
 
 /* list panel */
@@ -148,14 +175,8 @@
 .locator-header h2 {
   margin: 0 0 16px;
   font-size: clamp(20px, 3vw, 28px);
-  color: var(--text);
+  color: var(--sl-text);
   font-weight: 600;
-}
-.locator-header p {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: var(--text);
-  font-weight: 500;
 }
 .locator-search {
   width: 100%;
@@ -166,7 +187,7 @@
   font-size: 14px;
 }
 .locator-search:focus {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--sl-blue);
   outline-offset: 1px;
 }
 .locator-results {
@@ -179,13 +200,11 @@
   gap: 24px;
 }
 
-/* Custom scrollbar — thin, gray, rounded */
 .locator-results {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #c7c9d1 transparent; /* Firefox: thumb, track */
+  scrollbar-width: thin;
+  scrollbar-color: #c7c9d1 transparent;
 }
 .locator-results::-webkit-scrollbar {
-  /* Chrome, Edge, Safari */
   width: 6px;
 }
 .locator-results::-webkit-scrollbar-track {
@@ -199,60 +218,60 @@
   background-color: #a9acb6;
 }
 
-.store-card {
-  border: 1px solid var(--line);
+.sl-store-card {
+  border: 1px solid var(--sl-line);
   border-radius: 16px;
   padding: 16px;
   text-align: left;
   cursor: pointer;
   background: #fff;
   transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
-.store-card:hover {
-  border-color: var(--blue);
+.sl-store-card:hover {
+  border-color: var(--sl-blue);
 }
-.store-card.is-active {
-  border: 2px solid var(--blue);
+.sl-store-card.sl-is-active {
+  border: 1px solid var(--sl-blue);
 }
-.store-card:focus-visible {
-  outline: 2px solid var(--blue);
+.sl-store-card:focus-visible {
+  outline: 2px solid var(--sl-blue);
   outline-offset: 2px;
 }
-.store-card h3 {
+.sl-store-card h3 {
   margin: 0 0 8px;
   font-size: 16px;
-  color: var(--blue);
+  color: var(--sl-blue);
   font-weight: 600;
 }
-.store-card p {
+.sl-store-card p {
   margin: 0 0 4px;
   font-size: 14px;
-  color: var(--text);
+  color: var(--sl-text);
   font-weight: 400;
 }
-.store-card .phones {
+.sl-store-card .sl-phones {
   font-size: 14px;
   font-weight: 400;
-  color: var(--blue);
+  color: var(--sl-blue);
   margin: 0 0 16px;
 }
-.phone-link {
+.sl-phone-link {
   color: inherit;
   text-decoration: none;
 }
-.phone-link:hover {
+.sl-phone-link:hover {
   text-decoration: underline;
 }
-.phone-sep {
-  color: var(--blue);
+.sl-phone-sep {
+  color: var(--sl-blue);
 }
-.viber-btn {
+.sl-viber-btn {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--blue);
-  color: var(--blue);
+  border: 1px solid var(--sl-blue);
+  color: var(--sl-blue);
   background: #fff;
   font-size: 13px;
   font-weight: 600;
@@ -260,26 +279,27 @@
   border-radius: 31px;
   cursor: pointer;
 }
-.viber-btn:hover {
+.sl-viber-btn:hover {
   opacity: 0.8;
 }
-.viber-icon {
+.sl-viber-icon {
   flex-shrink: 0;
   display: block;
   width: 40px;
   height: 40px;
 }
+
 /* ============================================================
      TABLET
      ============================================================ */
 @media (width >= 768px) {
-  #locator-modal {
+  #sl-modal {
     inset: 0;
     align-items: center;
     background: rgba(0, 0, 0, 0.5);
   }
 
-  .modal-content-locator {
+  .sl-modal-content {
     flex-direction: row;
     width: 100%;
     max-width: 750px;
@@ -289,14 +309,14 @@
     transform: none;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
   }
-  #locator-modal.show-modal .modal-content-locator {
+  #sl-modal.sl-show-modal .sl-modal-content {
     transform: none;
   }
 
   .locator-list-panel {
     padding: 56px 40px 0;
   }
-  .locator-photo-panel {
+  .locator-map-panel {
     order: 2;
     height: auto;
     flex: 1;
@@ -308,21 +328,19 @@
     padding: 8px 14px;
     font-size: 13px;
   }
-  .get-directions-btn {
-    left: 23px;
-    right: 23px;
+  .sl-get-directions-btn {
     bottom: 24px;
   }
   .locator-results {
     margin-top: 28px;
   }
 }
+
 /* ============================================================
      DESKTOP
      ============================================================ */
 @media (width >= 1023px) {
-  .modal-content-locator {
+  .sl-modal-content {
     max-width: 1080px;
   }
 }
-/* </style> */

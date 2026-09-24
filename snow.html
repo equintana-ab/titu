@@ -1,0 +1,173 @@
+<!-- Snow -->
+
+<style>
+  /* --- snow --- */
+  .snowContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  .snowflake {
+    position: absolute;
+    top: -40px;
+    left: var(--left);
+    opacity: 0;
+    animation:
+      snow-fall var(--fall-duration) linear var(--fall-delay) 1 forwards,
+      snow-sway var(--sway-duration) ease-in-out var(--fall-delay) infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  .snowflake--glyph {
+    font-size: var(--size);
+    line-height: 1;
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.9),
+      0 0 2px rgba(255, 255, 255, 0.6);
+  }
+
+  .snowflake--dust {
+    width: var(--size);
+    height: var(--size);
+    background: #fff;
+    border-radius: 50%;
+    filter: blur(1px);
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.6);
+  }
+
+  @keyframes snow-fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0;
+    }
+    8% {
+      opacity: var(--opacity);
+    }
+    92% {
+      opacity: var(--opacity);
+    }
+    100% {
+      transform: translateY(105vh) rotate(var(--rotate));
+      opacity: 0;
+    }
+  }
+
+  @keyframes snow-sway {
+    0% {
+      margin-left: 0;
+    }
+    100% {
+      margin-left: var(--drift);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .snowflake {
+      --size: calc(var(--size) * 0.75);
+    }
+  }
+</style>
+
+<!-- HTML -->
+<div id="snow-container" class="snowContainer" aria-hidden="true"></div>
+
+<!-- SCRIPT -->
+<script type="text/simi-script">
+  (function () {
+      if (window.__snowflakesInit) return;
+      window.__snowflakesInit = true;
+
+      const TOTAL_FLAKES = 45;
+      const SPAWN_WINDOW_MS = 3000;
+      const CONTINUOUS = true;
+      const GLYPHS = ['\u2744', '\u2745', '\u2746'];
+
+      function randomizeFlake(flake, initialDelay) {
+          const isDust = Math.random() < 0.35;
+          flake.className = 'snowflake ' + (isDust ? 'snowflake--dust' : 'snowflake--glyph');
+          flake.textContent = isDust ? '' : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+
+          const size = isDust
+              ? (Math.random() * 4 + 3).toFixed(1)
+              : (Math.random() * 22 + 14).toFixed(1);
+          const left = (Math.random() * 100).toFixed(2);
+          const duration = (Math.random() * 5 + 7).toFixed(2);
+          const delay = initialDelay != null
+              ? initialDelay.toFixed(2)
+              : (Math.random() * 0.4).toFixed(2);
+          const sway = (Math.random() * 3 + 3).toFixed(2);
+          const opacity = (Math.random() * 0.3 + 0.7).toFixed(2);
+          const drift = (Math.random() * 50 - 25).toFixed(0) + 'px';
+          const rotate = (Math.random() * 360 - 180).toFixed(0) + 'deg';
+
+          flake.style.cssText =
+              '--size:' + size + 'px;' +
+              '--left:' + left + '%;' +
+              '--fall-duration:' + duration + 's;' +
+              '--fall-delay:' + delay + 's;' +
+              '--sway-duration:' + sway + 's;' +
+              '--opacity:' + opacity + ';' +
+              '--drift:' + drift + ';' +
+              '--rotate:' + rotate + ';';
+
+          return (parseFloat(delay) + parseFloat(duration)) * 1000 + 100;
+      }
+
+      function createSnowflakes() {
+          const container = document.getElementById('snow-container');
+          if (!container || container.getAttribute('data-snow-bound') === 'true') return;
+          container.setAttribute('data-snow-bound', 'true');
+          container.innerHTML = '';
+
+          for (let i = 0; i < TOTAL_FLAKES; i++) {
+              const flake = document.createElement('span');
+              const initialDelay = Math.random() * (SPAWN_WINDOW_MS / 1000);
+              const lifespan = randomizeFlake(flake, initialDelay);
+
+              if (CONTINUOUS) {
+                  // when this fall finishes, reroll its values and let it fall again
+                  flake.addEventListener('animationend', function (e) {
+                      if (e.animationName !== 'snow-fall') return;
+                      const el = e.target;
+                      el.style.animation = 'none';
+                      void el.offsetWidth;
+                      randomizeFlake(el, 0);
+                      el.style.animation = '';
+                  });
+              } else {
+                  (function (el, ms) {
+                      setTimeout(function () { el.remove(); }, ms);
+                  })(flake, lifespan);
+              }
+
+              container.appendChild(flake);
+          }
+      }
+
+      function init() {
+          // MutationObserver keeps this bound if Magento's SPA re-renders the CMS block
+          const observer = new MutationObserver(function () {
+              const el = document.getElementById('snow-container');
+              if (el && el.getAttribute('data-snow-bound') !== 'true') {
+                  createSnowflakes();
+              }
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+
+          createSnowflakes();
+      }
+
+      if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+      } else {
+          init();
+      }
+  })();
+</script>
